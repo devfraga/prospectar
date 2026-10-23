@@ -34,7 +34,7 @@ Escolha um dos dois jeitos. Os dois levam uns 20 minutos na primeira vez (a maio
    Quero instalar o projeto Prospectar no meu computador.
 
    1. Se o Git não estiver instalado, me ajude a instalar primeiro.
-   2. Clone o repositório https://github.com/SEU-USUARIO/prospectar.git dentro da minha pasta de usuário, numa pasta chamada "prospectar".
+   2. Clone o repositório https://github.com/devfraga/prospectar.git dentro da minha pasta de usuário, numa pasta chamada "prospectar".
    3. Abra o arquivo INSTALAR-COM-CLAUDE.md desse repositório e siga todos os passos.
 
    Eu não sou programador: me explique cada passo de forma simples e me avise sempre que eu precisar fazer alguma coisa.
@@ -96,7 +96,7 @@ cd ~
 ```
 
 ```bash
-git clone https://github.com/SEU-USUARIO/prospectar.git
+git clone https://github.com/devfraga/prospectar.git
 ```
 
 ```bash
@@ -144,6 +144,8 @@ Toda vez que for usar:
    ```
 
 Deixe o terminal aberto enquanto usa. Para desligar, clique no terminal e aperte **Ctrl + C**.
+
+**Não precisa conferir o container no Docker.** O `npm run iniciar` liga o motor de busca sozinho, abre o painel e abre o navegador. No Docker Desktop ele aparece como **prospectar** (dentro dele fica o `prospectar-motor`); a bolinha verde quer dizer que está rodando. Use sempre o `npm run iniciar`: o `npm run dev` abre só o painel, sem ligar o motor e sem abrir o navegador.
 
 ### Sua primeira busca
 
