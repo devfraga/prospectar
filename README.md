@@ -1,5 +1,7 @@
 # Prospectar
 
+![Painel do Prospectar: quadro de leads com as colunas Novos, Contatados, Reunião e Fechados](docs/img/painel.png)
+
 Encontre clientes no Google Maps por **nicho** e **cidade**. O Prospectar mostra na hora quem **não tem site**, quem **só tem Instagram/Facebook** e quem tem **site fora do ar**, e abre o **WhatsApp** do negócio com uma mensagem pronta.
 
 Tudo roda no seu computador, de graça, sem precisar de chave de API.
