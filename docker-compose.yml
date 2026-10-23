@@ -1,0 +1,24 @@
+# Motor de busca no Google Maps: gosom/google-maps-scraper (MIT, © Georgios Komninos).
+# Ele abre um navegador headless (Playwright) no Google Maps e expõe uma API REST em http://localhost:8080.
+#
+# A API do motor NÃO tem autenticação, por isso a porta fica presa a 127.0.0.1.
+# Não troque para 0.0.0.0 nem exponha na internet sem um proxy com autenticação na frente.
+
+services:
+  motor:
+    # Versão fixada para todo mundo rodar igual. Atualize de propósito, testando antes.
+    image: gosom/google-maps-scraper:v1.18.1
+    # Em Mac com Apple Silicon, se o container não subir, descomente a linha abaixo.
+    # platform: linux/amd64
+    container_name: prospectar-motor
+    restart: unless-stopped
+    command: ["-web", "-data-folder", "/gmapsdata"]
+    ports:
+      - "127.0.0.1:8080:8080"
+    volumes:
+      - motor_dados:/gmapsdata # resultados dos jobs
+      - motor_cache:/opt # cache do navegador Playwright, evita baixar de novo
+
+volumes:
+  motor_dados:
+  motor_cache:

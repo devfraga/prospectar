@@ -1,0 +1,18 @@
+node_modules/
+.next/
+out/
+next-env.d.ts
+*.tsbuildinfo
+
+# Prisma Client gerado (npm install / npm run db:push recriam)
+src/generated/
+
+# Banco local e exportações: contêm dados pessoais de leads
+data/*
+!data/.gitkeep
+exports/
+*.csv
+
+.env
+.env.local
+.DS_Store

@@ -1,0 +1,22 @@
+{
+  "$comment": "Comandos locais do prospectar liberados sem confirmação. Nada aqui acessa a internet, exceto as buscas do próprio motor e a verificação dos sites dos leads.",
+  "permissions": {
+    "allow": [
+      "Bash(npm run cli:*)",
+      "Bash(npm run setup:*)",
+      "Bash(npm run iniciar:*)",
+      "Bash(npm run dev:*)",
+      "Bash(npm run db:push:*)",
+      "Bash(npm run test:*)",
+      "Bash(npm test:*)",
+      "Bash(npm run motor:up:*)",
+      "Bash(npm run motor:down:*)",
+      "Bash(docker compose up:*)",
+      "Bash(docker compose down:*)",
+      "Bash(docker compose ps:*)",
+      "Bash(docker compose logs:*)",
+      "Bash(curl -s http://localhost:8080:*)"
+    ],
+    "deny": []
+  }
+}

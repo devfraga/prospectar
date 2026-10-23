@@ -1,0 +1,103 @@
+// Banco local (SQLite). A URL vem de DATABASE_URL, lida em prisma.config.ts.
+// Campos de "tipo" (status, presença, fonte) são String: os valores válidos estão em src/core/tipos.ts.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Busca {
+  id            String        @id @default(cuid())
+  nicho         String
+  cidade        String
+  lat           Float
+  lon           Float
+  raio          Int // metros
+  profundidade  Int
+  grade         Int           @default(1) // cobertura: N x N partes, uma busca em cada (1 ou 2)
+  fonte         String // gosom | places
+  status        String        @default("pendente") // pendente | rodando | enriquecendo | concluida | falhou
+  erro          String?
+  bbox          String? // JSON [sul, norte, oeste, leste] quando grade > 1
+  proxies       String? // JSON string[]
+  novosLeads    Int           @default(0)
+  criadoEm      DateTime      @default(now())
+  atualizadoEm  DateTime      @updatedAt
+  tarefas       TarefaMotor[]
+  leads         BuscaLead[]
+}
+
+model TarefaMotor {
+  id          String   @id @default(cuid())
+  buscaId     String
+  busca       Busca    @relation(fields: [buscaId], references: [id], onDelete: Cascade)
+  ordem       Int
+  lat         Float
+  lon         Float
+  raio        Int
+  zoom        Int
+  jobId       String? // id do job no motor gosom
+  status      String   @default("pendente") // pendente | rodando | ok | falhou
+  linhas      Int      @default(0)
+  erro        String?
+  iniciadoEm  DateTime?
+  concluidoEm DateTime?
+
+  @@index([buscaId, status])
+}
+
+model Lead {
+  id            String      @id @default(cuid())
+  placeId       String      @unique
+  nome          String
+  categoria     String?
+  endereco      String?
+  cidade        String?
+  lat           Float?
+  lon           Float?
+  linkMaps      String?
+  telefone      String? // como veio do Maps
+  telefoneE164  String? // +5511987654321
+  ehCelular     Boolean     @default(false)
+  website       String?
+  presenca      String      @default("sem_site") // sem_site | so_rede_social | com_site | site_fora_do_ar
+  siteHttps     Boolean?
+  siteNota      String? // motivo de "fora do ar" ou observação (sem https)
+  emails        String? // separados por vírgula
+  instagram     String?
+  facebook      String?
+  linkedin      String?
+  nota          Float?
+  avaliacoes    Int?
+  pontuacao     Int         @default(0)
+  status        String      @default("novo") // novo | contatado | reuniao | fechado | descartado (removido do quadro)
+  naoContatar   Boolean     @default(false)
+  notas         String?
+  mensagem      String? // abordagem gerada por IA; tem prioridade sobre o template
+  enriquecidoEm DateTime?
+  criadoEm      DateTime    @default(now())
+  atualizadoEm  DateTime    @updatedAt
+  buscas        BuscaLead[]
+
+  @@index([status])
+  @@index([presenca])
+  @@index([pontuacao])
+}
+
+model BuscaLead {
+  buscaId String
+  leadId  String
+  busca   Busca  @relation(fields: [buscaId], references: [id], onDelete: Cascade)
+  lead    Lead   @relation(fields: [leadId], references: [id], onDelete: Cascade)
+
+  @@id([buscaId, leadId])
+}
+
+model Config {
+  chave String @id
+  valor String // JSON
+}
